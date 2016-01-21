@@ -1,0 +1,116 @@
+body {
+	margin:0;
+	color:#545c5f;
+	font:12px "Trebuchet MS", Helvetica, sans-serif;
+	background:#D3D3D3;
+	min-width:1000px;
+}
+
+a {
+	text-decoration:none;
+	color:#b7b7b7;
+	outline:none;
+}
+a:hover {text-decoration:underline;}
+
+input, textarea, select {
+	font:100% "Trebuchet MS", Helvetica, sans-serif;
+	vertical-align:middle;
+	color:#626667;
+	outline:none;
+}
+form, fieldset {
+	margin:0;
+	padding:0;
+	border-style:none;
+}
+q{quotes: none;}q:before{content:"";}q:after{content:"";}
+.wrap{
+	width:100%;
+}
+.wrap:after{
+	content:"";	display:block;	clear:both;
+}
+
+#header2{
+	height: 124px;
+	position:relative;
+	z-index:102;
+}
+#header2 h1 {
+	float: left;
+	margin: 15px;
+	font-size: 45px;
+	color: white;
+	display: block;
+}
+#header2 h1 a{
+	text-decoration: none;
+	color: white;
+	
+}
+.header-wrap{
+	background: #2c3338;
+}
+.header-holder{
+	width:900px;
+	margin:0 auto;
+	padding:23px 0 0;
+}
+#nav{
+	list-style:none;	margin:0 -8px 0 0;	padding:0 0 13px;
+	float:right;
+	display:inline;
+	font-size: 25px;
+}
+#nav li{
+	float:left;
+	padding:0 0 20px;
+	position:relative;
+	margin-right:8px;
+}
+  #slideShowImages { /* The following CSS rules are optional. */
+      border: 1px gray solid;
+      background-color: lightgray;
+    }   
+  
+    #slideShowImages img { /* The following CSS rules are optional. */
+      border: 0.8em black solid;
+      padding: 3px;
+      width: 700px;
+      height: 500px;
+    }   
+.txt{
+	width: 350px;
+	float:right;
+	font-size: medium;
+	font-weight: bold;
+}
+
+.item1{
+   width:600px;
+   min-height: 300px;
+   margin: 0 auto;
+   background: #eee;
+               }
+.item1 .price1{
+   margin-top:5px;
+   display: block;
+   font-size: medium;
+   color:black;
+               }
+.item1 .buy1{
+   margin-top:5px;
+   display:block;
+   font-size: medium;
+   color:black;
+               }
+.item1 img{
+    display: block;
+    width: 150px;                    
+    height:auto;
+               }
+.search{
+	font-size: medium;
+	color: black;
+	}			

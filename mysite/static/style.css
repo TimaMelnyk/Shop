@@ -1,0 +1,153 @@
+ .wrapper{
+    width: 1000px;
+    margin: 0 auto;
+               }
+.wrapper .header{
+    width: 100%;
+    height: 40px;
+    background: white;
+               }
+.wrapper .header h1{
+   float: inherit;
+   display: block;
+   text-align: center;
+   color: black;
+   font-weight:bolder;
+   font-size: 35px;
+}
+.wrapper .body{
+    width: 100%;
+    min-height: 650px;
+    background: white;
+    font-size: 0;
+               }
+.wrapper .body .left{
+    width: 300px;
+    min-height: 600px;
+    background: #D3D3D3;
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 10px;
+               }
+.wrapper .body .main{
+    width: 650px;
+    margin-left: 25px;
+    margin-right: 10px;
+    min-height: 600px;
+    background: #D3D3D3;
+    display: inline-block;
+    vertical-align: top;
+               }
+.wrapper .body .main .item{
+    display: inline-block;
+    vertical-align: top;
+    margin: 10px;
+    background:  #2c3338;
+    width: 150px;
+    min-height: 150px;
+    text-decoration: none;
+    color: white;
+    font-weight: bolder;
+    font-size: 25px;
+               }
+.wrapper .body .main .item img{
+    display: block;
+    width: 150px;                    
+    height:auto;
+               }
+.wrapper .body .main .item .title{
+    font-size: 14px;
+    display: block ;
+    margin-top: 5px;
+               }
+.wrapper .body .main .item .price{
+    font-size: 14px;
+    display: block ;
+    margin-top: 5px;
+    color: white;
+               }
+.wrapper .body .item{
+   width:600px;
+   min-height: 300px;
+   margin: 0 auto;
+   background: #eee;
+               }
+.wrapper .body .item .price{
+   margin-top:5px;
+   display: block;
+   font-size: medium;
+   color:black;
+               }
+.wrapper .body .item .buy{
+   margin-top:5px;
+   display:block;
+   font-size: medium;
+   color:black;
+               }
+.wrapper .body .item .full{
+   max-width: 600px;
+   height: auto;
+   display: block;
+   margin: 0 auto;
+               }
+ .wrapper .body ul{
+   font-size: 14px;
+               }
+.cart{
+   background: #e5e5e5;
+   font-size: medium;
+   border: 1px solid #000;
+   position: fixed;
+   top: 50%;
+   right: 0;
+   color: black;
+   width: 140px;
+}
+.cart .oformit, .cart .summa{
+   display: block;
+   margin:0 auto;
+}
+.cart .oformit{
+   width: 120px;
+   color: black;
+   text-decoration: underline;
+}
+.cart .summa{
+   width: 20px;
+}
+.cart .summa:after{
+   content: 'грн';
+   margin-left: 5px;
+}
+.korzina .row{
+   display:block;
+   width: 100%;
+   margin-bottom: 10px;
+}
+.korzina .row img, .korzina .row .price, .korzina .row .name,.korzina .row .delete{
+   display: inline-block;
+   vertical-align: middle;
+   width: 30%;
+   font-size: 14px;
+}
+.korzina .row img{
+   width: auto;
+   max-height: 100px;
+   margin-right: 30px;
+}
+.korzina .row .delete{
+   width: 10px;
+   text-decoration: underline;
+   color: blue;
+   cursor: pointer;
+}
+
+.wrapper .total {
+   font-size: medium;
+   color: black;
+   text-align: left;
+}
+
+
+
+

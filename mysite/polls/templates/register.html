@@ -1,0 +1,43 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv=Content-Type content="text/html;charset=UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" type="text/css" href="{% static "style1.css" %}">
+</head>
+<body>
+		
+	<div class="header-wrap">
+		<div id="header2">
+            <h1><a href="/">SHOP</a></h1>
+			<div class="header-holder">
+				<div class="wrap">
+					<h1 class="logo"></h1>
+					<ul id="nav" class="ddsmoothmenu">
+					        {%  for category in categories %}
+                            <li><a href="/{{category.alias}}/">{{category.name}}</a></li>
+                            {% endfor %}
+						<li><a href="/order/"><span>Корзина</span></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="linee"></div>
+	
+    <div id="login">
+        <form  method="POST" action="/signup/">
+			{% csrf_token %}
+            <fieldset class="clearfix">
+				<p><span class="fontawesome-user"></span><input type="text" value="Имя" name="firstName" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p>
+				<p><span class="fontawesome-user"></span><input type="text" value="Фамилия" name=" lastName" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p>
+                <p><span class="fontawesome-user"></span><input type="text" value="Логин" name="login" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+				<p><span class="fontawesome-lock"></span><input type="password"  value="Пароль" name="password" onBlur="if(this.value == '') this.value = 'Пароль'" onFocus="if(this.value == 'Пароль') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+				<p><span class="fontawesome-phone"></span><input type="text" value="Номер" name="phoneNumber" onBlur="if(this.value == '') this.value = 'Номер'" onFocus="if(this.value == 'Номер') this.value = ''" required></p>
+				<p><input type="submit" value="Регистрация"></p>
+            </fieldset>
+        </form>
+    </div>
+</body>
+</html>

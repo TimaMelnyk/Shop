@@ -1,0 +1,70 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta http-equiv=Content-Type content="text/html;charset=UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static "all.css" %}">
+	<link rel="stylesheet" href="{% static "new.css"%}" />
+	<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
+	<script src="{% static "craftyslide.js"%}"></script>
+</head>
+<body>
+	<div class="header-wrap">
+		<div id="header2">
+            <h1><a href="/">SHOP</a></h1>
+			<div class="header-holder">
+				<div class="wrap">
+					<h1 class="logo"></h1>
+					<ul id="nav" class="ddsmoothmenu">
+					        {%  for category in categories %}
+                            <li><a href="/{{category.alias}}/">{{category.name}}</a></li>
+                            {% endfor %}
+						<li><a href="/order/"><span>Корзина</span></a></li>
+					</ul>
+				</div>
+				<div class="form-wrap">
+				
+					<form action="#" class="login-form">
+						<fieldset>
+							<input type="button" class="button sign-up" value="Sign up" onclick="window.location.href='/login/'"/>
+							<input type="button" class="button sign-in" value="Sign in" />
+							<span class="text-wrap"><input type="text" class="text" value="Password..." /></span>
+							<span class="text-wrap"><input type="text" class="text" value="Login..." /></span>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="search">
+     {% if errors %}
+        <ul>
+            {% for error in errors %}
+            <li style="color: red;">{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <form action="" method="get">
+        <input type="text" name="q">
+        <input type="submit" value="Search">
+    </form>
+        <p>You searched for: <em>{{query}}</em></p>
+        {% if  items %}
+    <p>Found {{ items|length }} item{{ items|pluralize }}.</p>
+    <ul>
+        {% for item in items %}
+        <li>{{ item.name }}</li>
+            <a class="item1" href="/item/{{item.alias}}/">
+            <img src="{{item.image}}" alt="">
+            <span class="title1">{{item.name}}</span>
+            <span class="price1">{{item.price}} грн</span>                
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No books matched your search criteria.</p>
+{% endif %}
+    </div>
+
+</body>
+</html>

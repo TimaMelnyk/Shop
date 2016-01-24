@@ -1,28 +1,50 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html>
+<html >
 <head>
-	<meta http-equiv=Content-Type content="text/html;charset=UTF-8">
-    <title>login</title>
-    <link rel="stylesheet" type="text/css" href="{% static "style1.css" %}">
+    <title>Catalog</title>
+    <link rel="stylesheet" type="text/css" href="{% static "all.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+		<link rel="stylesheet" type="text/css" href="{% static "style1.css" %}">
+	<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
+	<script src="{% static "craftyslide.js" %}"></script>
 </head>
 <body>
-		
 	<div class="header-wrap">
-		<div id="header2">
-            <h1><a href="/">SHOP</a></h1>
+		<div id="header">
 			<div class="header-holder">
 				<div class="wrap">
-					<h1 class="logo"></h1>
 					<ul id="nav" class="ddsmoothmenu">
-					        {%  for category in categories %}
-                            <li><a href="/{{category.alias}}/">{{category.name}}</a></li>
-                            {% endfor %}
-						<li><a href="/order/"><span>Корзина</span></a></li>
+						<li><a href="/"><span><em>Home</em></span></a></li>
+						  {%  for category in categories %}
+						<li><a href="/{{category.alias}}/"><span><em>{{category.name}}</em></span></a></li>
+						{% endfor %}
+						<li><a href="/order/"><span><em>Корзина</em></span></a></li>
+						<li><a href="#"><span><em>Contacts</em></span></a></li>
 					</ul>
+				</div>
+				<div class="form-wrap">
+					 {% if error %}
+        <p style="color: red;">Please submit a search term.</p>
+		{% endif %}
+					<form method="GET" action="/search/" class="search-form">
+						<fieldset>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Start searching" name="q" /></span>
+							<input type="submit" class="submit" value="Start searching..." />
+						</fieldset>
+					</form>
+					<form action="#" class="login-form">
+						<fieldset>
+							<input type="button" class="button sign-up" value="Sign up" onclick="window.location.href='/register/'"/>
+							<input type="button" class="button sign-in" value="Sign in" />
+							<span class="text-wrap"><input type="text" class="text" placeholder="Password" /></span>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Login" /></span>
+						</fieldset>
+					</form>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 	<div class="linee"></div>
 	
@@ -30,11 +52,11 @@
         <form  method="POST" action="/signup/">
 			{% csrf_token %}
             <fieldset class="clearfix">
-				<p><span class="fontawesome-user"></span><input type="text" value="Имя" name="firstName" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p>
-				<p><span class="fontawesome-user"></span><input type="text" value="Фамилия" name=" lastName" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p>
-                <p><span class="fontawesome-user"></span><input type="text" value="Логин" name="login" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
-				<p><span class="fontawesome-lock"></span><input type="password"  value="Пароль" name="password" onBlur="if(this.value == '') this.value = 'Пароль'" onFocus="if(this.value == 'Пароль') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
-				<p><span class="fontawesome-phone"></span><input type="text" value="Номер" name="phoneNumber" onBlur="if(this.value == '') this.value = 'Номер'" onFocus="if(this.value == 'Номер') this.value = ''" required></p>
+				<p><span class="fontawesome-user"></span><input type="text"  name="firstName" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p>
+				<p><span class="fontawesome-user"></span><input type="text"  name="lastName" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p>
+                <p><span class="fontawesome-user"></span><input type="text"  name="login" onBlur="if(this.value == '') this.value = 'Логин'" onFocus="if(this.value == 'Логин') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Username" -->
+				<p><span class="fontawesome-lock"></span><input type="password"   name="password" onBlur="if(this.value == '') this.value = 'Пароль'" onFocus="if(this.value == 'Пароль') this.value = ''" required></p> <!-- JS because of IE support; better: placeholder="Password" -->
+				<p><span class="fontawesome-phone"></span><input type="text"  name="phoneNumber" onBlur="if(this.value == '') this.value = 'Номер'" onFocus="if(this.value == 'Номер') this.value = ''" required></p>
 				<p><input type="submit" value="Регистрация"></p>
             </fieldset>
         </form>

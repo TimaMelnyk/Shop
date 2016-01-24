@@ -53,7 +53,7 @@
 .wrapper .body .main .item img{
     display: block;
     width: 150px;                    
-    height:auto;
+    height: 100px;
                }
 .wrapper .body .main .item .title{
     font-size: 14px;
@@ -129,11 +129,13 @@
    vertical-align: middle;
    width: 30%;
    font-size: 14px;
+   
 }
 .korzina .row img{
-   width: auto;
+   width: 100px;
    max-height: 100px;
    margin-right: 30px;
+   
 }
 .korzina .row .delete{
    width: 10px;
@@ -142,12 +144,21 @@
    cursor: pointer;
 }
 
-.wrapper .total {
+.things .total {
    font-size: medium;
    color: black;
    text-align: left;
 }
 
-
-
+.things {
+    width: 600px;
+    margin: 0 auto;
+    float: left;
+}
+.orderr {
+   display: block;
+   width: 400px;
+    margin: 0 auto;
+    float: right;
+}
 

@@ -1,43 +1,51 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html>
+<html >
 <head>
-    <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
-    <title>Order-page</title>
-    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="{% static "jquery.cookie.js" %}"></script>
+    <title>Catalog</title>
     <link rel="stylesheet" type="text/css" href="{% static "all.css" %}">
+	<link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+	<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
+	<script src="{% static "jquery.cookie.js" %}"></script>
 </head>
 <body>
-    <div class="header-wrap">
-		<div id="header2">
-            <h1><a href="/">SHOP</a></h1>
+	<div class="header-wrap">
+		<div id="header">
 			<div class="header-holder">
 				<div class="wrap">
-					<h1 class="logo"></h1>
 					<ul id="nav" class="ddsmoothmenu">
-					        {%  for category in categories %}
-                            <li><a href="/{{category.alias}}/">{{category.name}}</a></li>
-                            {% endfor %}
-						<li><a href="/order/"><span>Корзина</span></a></li>
+						<li><a href="/"><span><em>Home</em></span></a></li>
+						  {%  for category in categories %}
+						<li><a href="/{{category.alias}}/"><span><em>{{category.name}}</em></span></a></li>
+						{% endfor %}
+						<li><a href="/order/"><span><em>Корзина</em></span></a></li>
+						<li><a href="#"><span><em>Contacts</em></span></a></li>
 					</ul>
 				</div>
 				<div class="form-wrap">
-				
+					 {% if error %}
+        <p style="color: red;">Please submit a search term.</p>
+		{% endif %}
+					<form method="GET" action="/search/" class="search-form">
+						<fieldset>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Start searching" name="q" /></span>
+							<input type="submit" class="submit" value="Start searching..." />
+						</fieldset>
+					</form>
 					<form action="#" class="login-form">
 						<fieldset>
 							<input type="button" class="button sign-up" value="Sign up" onclick="window.location.href='/register/'"/>
 							<input type="button" class="button sign-in" value="Sign in" />
-							<span class="text-wrap"><input type="text" class="text" value="Password..." /></span>
-							<span class="text-wrap"><input type="text" class="text" value="Login..." /></span>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Password" /></span>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Login" /></span>
 						</fieldset>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-    <div class="wrapper">
+	</div>
+    <div class="things">
         <div class="header"><h1>Ваша корзина</h1></div>
         <div class="korzina"></div>
         <div class="total">Сумма вашей покупки: <span class="summa">0</span> грн</div>
@@ -47,15 +55,17 @@
             Please correct the error{{ form.errors|pluralize }} below.
         </p>
     {% endif %}
-
+<div class="orderr">
+	<h3>Оформить заказ</h3>
     <form action="" method="post">{% csrf_token %}
         <table>
             {{ form.as_table }}
         </table>
-        <input type="submit" value="Submit">
+        <input type="submit" value="Заказать">
     </form>
+	</div>
 	
-<script type="text/javascript">
+<script>
     $(function(){
 	    var arr1 = $.cookie('cart');
         if (!arr1) {                
@@ -64,14 +74,13 @@
         var json2 = $.parseJSON(arr1);
         var summa1 = 0;
         $.each(json2, function( index, value ){
-            $('.korzina').append('<div class="row"><div class="id" style="display:none">'+index+'</div><img src="'+value["img"]+'"><div class="name">'+value["name"]+'</div><div class="price">'+value["price"]+'</div><div class="delete">X</div></div>');
+            $('.korzina').append('<div class="row"><div class="id" style="display:none">'+index+'</div><img src="'+value["img"]+'"><div class="name">'+value["name"]+'</div><div class="price">'+value["price"]+'</div><div class="delete">Delete item</div></div>');
             summa1 = summa1 + parseInt(value['price']);
         });
         $('.total .summa').text(summa1);
         $('.delete').on('click',function(){
             var parent = $(this).parent();
             var obj = parseInt($(this).parent('.row').find('.id').text());
-            $('.try').text(obj);
             var arr = $.cookie('cart');
             if (!arr) {                
                 arr = '[]';
@@ -87,8 +96,8 @@
             $.cookie('cart', JSON.stringify(json),{path:'/'});
             $('.total .summa').text(sum);
             parent.remove();
-            $.each($('.id'), function( index, value ){
-                $(this).text(index);
+            $.each($('.id'), function(index, value ){
+				$(this).text(index);
 			});
         });
      });

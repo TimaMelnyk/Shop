@@ -10,8 +10,13 @@ class CategoryAdmin(admin.ModelAdmin):
 class ZakazAdmin(admin.ModelAdmin):
     list_display = ('id','name','date')
         
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('id','firstName','lastName','login','password','phoneNumber')
     
+
+
 admin.site.register(Item,ItemAdmin)
 admin.site.register(Category,CategoryAdmin)
 admin.site.register(Zakaz,ZakazAdmin)
+admin.site.register(User,UserAdmin)
     #code

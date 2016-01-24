@@ -6,7 +6,6 @@ from django import forms
 USER = 'USER'
 
 class ContactForm(forms.Form):
-    subject = forms.CharField(max_length=100)
     email = forms.EmailField(required=False)
     phone = forms.CharField(max_length=20)
 
@@ -44,18 +43,24 @@ class Item(models.Model):
 #     phoneNumber = models.CharField(max_length=15, null=True)
 
 class User(models.Model):
-    lastName = models.CharField(max_length=30)
-    firstName = models.CharField(max_length=30)
-    login = models.CharField(max_length=20,null=True)
-    password = models.CharField(max_length=20,null=True)
-    phoneNumber = models.CharField(max_length=15, null=True)
+    lastName = models.CharField(max_length=30, verbose_name='Last Name')
+    firstName = models.CharField(max_length=30, verbose_name='First Name')
+    login = models.CharField(max_length=20, verbose_name='Login')
+    password = models.CharField(max_length=20, verbose_name='Password')
+    phoneNumber = models.CharField(max_length=15, verbose_name='Phone Number')
     vkId = models.CharField(max_length=15,null=True)
-    permissions = models.CharField(max_length=20, default=USER)
+    permissions = models.CharField(max_length=20, default=USER, verbose_name='Permission')
 
+    class Meta:
+        verbose_name = "User"
+        verbose_name_plural = "Users"
+    
     @property
     def isAdmin(self):
         return self.permissions == ADMIN
 
+    def __str__(self):
+        return 'Lud %s' % self.login
 
 class Zakaz(models.Model):
     name = models.CharField(max_length=255, verbose_name='Purchaser')

@@ -1,81 +1,77 @@
 {% load staticfiles %}
 <!DOCTYPE html>
-<html>
+<html >
 <head>
-	<title>{{sitename}}</title>
-	<meta http-equiv=Content-Type content="text/html;charset=UTF-8">
+    <title>Catalog</title>
     <link rel="stylesheet" type="text/css" href="{% static "all.css" %}">
-	<link rel="stylesheet" href="{% static "new.css"%}" />
+	 <meta http-equiv=Content-Type content="text/html;charset=UTF-8">
+	  
 	<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
-	<script src="{% static "craftyslide.js"%}"></script>
 </head>
 <body>
 	<div class="header-wrap">
-		<div id="header2">
-            <h1><a href="/">SHOP</a></h1>
+		<div id="header">
 			<div class="header-holder">
 				<div class="wrap">
-					<h1 class="logo"></h1>
 					<ul id="nav" class="ddsmoothmenu">
-					        {%  for category in categories %}
-                            <li><a href="/{{category.alias}}/">{{category.name}}</a></li>
-                            {% endfor %}
-						<li><a href="/order/"><span>Корзина</span></a></li>
+						<li><a href="/"><span><em>Home</em></span></a></li>
+						  {%  for category in categories %}
+						<li><a href="/{{category.alias}}/"><span><em>{{category.name}}</em></span></a></li>
+						{% endfor %}
+						<li><a href="/order/"><span><em>Корзина</em></span></a></li>
+						<li><a href="#"><span><em>Contacts</em></span></a></li>
 					</ul>
 				</div>
 				<div class="form-wrap">
-				
+					 {% if error %}
+        <p style="color: red;">Please submit a search term.</p>
+		{% endif %}
+					<form method="GET" action="/search/" class="search-form">
+						<fieldset>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Start searching" name="q" /></span>
+							<input type="submit" class="submit" value="Start searching..." />
+						</fieldset>
+					</form>
 					<form action="#" class="login-form">
 						<fieldset>
 							<input type="button" class="button sign-up" value="Sign up" onclick="window.location.href='/register/'"/>
 							<input type="button" class="button sign-in" value="Sign in" />
-							<span class="text-wrap"><input type="text" class="text" value="Password..." /></span>
-							<span class="text-wrap"><input type="text" class="text" value="Login..." /></span>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Password" /></span>
+							<span class="text-wrap"><input type="text" class="text" placeholder="Login" /></span>
 						</fieldset>
 					</form>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="txt">
-		<h3>Christian Peau</h3>
-		<p>Обувь Christian Peau, несмотря на французское название, родом из Японии. Она сделана
-		по образцам европейских сапожников 19-го века, но с применением современных японских технологий.
-		В итоге получаются толково состаренные мужские ботинки (около 27 000 рублей) любопытной формы.
-		Они подходят и к джинсам, и к костюмам, а от носки выглядят только лучше.
-		У Christian Peau в новой коллекции есть еще и яркие кеды, но ботинки все же необычнее. </p>
-	</div>
-	<div id="slideshow">
-  <ul>
-    <li>
-      <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR4mCWQSKIH_3MwIgEbq1lS_9k6Xn8oCSYHDq1Z4J67VuM4p80-" title="Lorem ipsum dolor sit amet" />
-    </li>
-    
-    <li>
-      <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcT4pZNvdUN9o3rxvHsjH5GzhCnHBy5NGae4OUEgOWZa1qwEKPkS" title="Lorem ipsum dolor sit amet" />
-    </li>
-	
-	<li>           
-      <img src="https://41.media.tumblr.com/b5bd81959d2e9caadaade09b80e08129/tumblr_o0j9k9LpV61sn35i0o1_500.jpg" title="Lorem ipsum dolor sit amet" />
-    </li>
-    
-    <li>           
-      <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQZMhERXwrtiSpJws47qT4GBAanthpNKNnplnHe9n3z-dz7D2p-" title="Lorem ipsum dolor sit amet" />
-    </li>	                         
-  </ul>
-</div>
-	<script>
-  $("#slideshow").craftyslide();
-</script>
-	<br>
-	<div>
-		 {% if error %}
-        <p style="color: red;">Please submit a search term.</p>
-		{% endif %}
-		<form method="GET" action="/search/">
-		<input type="text" name="q">
-		<input type="submit" value="Search">
-		</form>
-	</div>
-</body>
+	<div id="intro-holder">
+		<div class="intro-box">
+			<div class="roundabout-holder large">
+<ul id="myRoundabout">
+	<li>
+		<img src="{% static "images/img6.jpg" %}" alt="image description" width="100%"/>
+		<div class="image">
+			
+		</div>
+	</li>
+	<li>
+		<img src="{% static "images/img1.jpg" %}" alt="image description" width="100%"/>
+		<div class="image">
+			
+		</div>
+	</li>
+	<li>
+		<img src="{% static "images/img7.jpg" %}" alt="image description" width="100%"/>
+		<div class="image">
+			
+		</div>
+	</li>
+</ul>
+				<div class="controls">
+					<a href="#" id="next">Next!</a>
+					<a href="#" id="previous">Previous!</a>
+				</div>
+			</div>
+		</div>
+	</div></body>
 </html>

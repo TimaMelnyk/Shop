@@ -22,7 +22,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^register/', 'polls.views.register'),
+    url(r'^page/', 'polls.views.homepage'),
     url(r'^signup/', 'polls.views.auth'),
+    url(r'^signin/', 'polls.views.login'),
     # url(r'^order/regthanks/', 'polls.views.thanks'),
     url(r'^$', 'polls.views.home'),
     url(r'^item/(?P<alias>[^/]+)', 'polls.views.item'),

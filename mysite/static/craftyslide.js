@@ -1,49 +1,47 @@
 /*
 * Craftyslide
-* Created by: Abid Din - http://craftedpixelz.co.uk
-* Version: 1.0
-* Copyright: Crafted Pixelz
-* License: MIT license
-* Updated: 7th June 2011
+* Автор: Abid Din - http://craftedpixelz.co.uk
+* Версия: 1.0
+* Права: Crafted Pixelz
+* Лицензия: MIT
+* Обновлено: 07 июня 2011
 */
 
 (function ($) {
     $.fn.craftyslide = function (options) {
-
-        // Defaults
         var defaults = {
-            "width": 800,
-            "height": 470,
+            "width": 600,
+            "height": 500,
             "pagination": false,
-            "fadetime": 150,
-            "delay": 5500
+            "fadetime": 350,
+            "delay": 5000
         };
-
         var options = $.extend(defaults, options);
+        
+            return this.each(function () {
 
-        return this.each(function () {
-
-            // Vars
+            // Переменные
             var $this = $(this);
             var $slides = $this.find("ul li");
 
             $slides.not(':first').hide();
 
-            // Pagination
+            // Страницы
             function paginate() {
                 $this.append("<ol id='pagination' />");
                 
                 var i = 1;
                 $slides.each(function () {
                     $(this).attr("id", "slide" + i);
-                    $("#pagination").append("<li><a href='#slide" + i + "'>" + i + "</a></li>");
+                    $("#pagination")
+                    .append("<li><a href='#slide" + i + "'>" + i + "</a></li>");
                     i++;
                 });
                 
                 $("#pagination li a:first").addClass("active");
             }
 
-            // Add captions
+            // Добавляем подписи
             function captions() {
                 $slides.each(function () {
                     $caption = $(this).find("img").attr("title");
@@ -54,7 +52,7 @@
                 });
             }
 
-            // Manual mode
+            // Ручной режим
             function manual() {
                 var $pagination = $("#pagination li a");
                 $pagination.click(function (e) {
@@ -73,10 +71,15 @@
                 });
             }
 
-            // Auto mode
+            // Автоматический режим
             function auto() {
                 setInterval(function () {
-                    $slides.filter(":first-child").fadeOut(options.fadetime).next("li").fadeIn(options.fadetime).end().appendTo("#slideshow ul");
+                    $slides.filter(":first-child")
+                    .fadeOut(options.fadetime)
+                    .next("li")
+                    .fadeIn(options.fadetime)
+                    .end()
+                    .appendTo("#slideshow ul");
 
                     $slides.each(function () {
                         if ($slides.is(":visible")) {
@@ -90,15 +93,15 @@
                 }, options.delay);
             }
 
-            // Width
+            // Ширина
             $this.width(options.width);
             $this.find("ul, li img").width(options.width);
 
-            // Height
+            // Высота
             $this.height(options.height);
             $this.find("ul, li").height(options.height);
 
-            // Check Boolean values
+            // Проверка 
             if (options.pagination === true) {
                 paginate();
             } else {

@@ -1,10 +1,8 @@
 from django.shortcuts import render_to_response
 from polls.models import *
-from django.http import HttpResponse, HttpResponseRedirect,Http404
+from django.http import HttpResponse, HttpResponseRedirect,Http404, JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.template.loader import render_to_string
-from django.core.context_processors import csrf
-
 from datetime import *
 import random
 import string
@@ -12,41 +10,28 @@ from django.shortcuts import render_to_response
 from django.core.mail import send_mail ,BadHeaderError
 from django.template import RequestContext, loader
 from django.core.context_processors import csrf
-from django.contrib.auth.models import Group
-from django.contrib.auth.admin import UserAdmin
 from django.contrib import auth
-from django.contrib.auth.forms import UserCreationForm
 from django.conf import settings
 import re
-from polls.models import User
 from django.shortcuts import render, redirect
+import json
 # Create your views here.
 
 def home(request):
     category = Category.objects.all()
+    userInfo = get_user_authenticated(request)
     context = {
         'sitename': 'InternetShop',
         'categories': category,
+        'userInfo': userInfo
     }
-    return HttpResponse(render_to_string('home.html',context))
+    return render(request, 'home.html', context)
 
 def register(request):
-    return render_to_response('register.html')
-
-# def register(request):
-#     error = "NOT VALID"
-#     if request.method == 'POST':
-#         login = request.POST['login']
-#         password = request.POST['password']
-#         password2 = request.POST['password2']
-#         phoneNumber = request.POST['phone']
-#         valid = check_register_input_fields(login, password, password2, phoneNumber)
-#         if not valid:
-#             raise Http404('NOT VALID')
-#         new_user = create_user(login=login,password=password,phoneNumber=phoneNumber)
-#         request.session['user_id'] = new_user.id
-#     return render_to_response('register.html')
-#     
+    category = Category.objects.all()
+    context = RequestContext(request, {'categories': category})
+    return render(request,'register.html',context)
+  
 
 def auth(request):
     c = {}
@@ -68,48 +53,21 @@ def auth(request):
         if request.method == 'POST':
             lastName = request.POST['lastName']
             firstName = request.POST['firstName']
-            print(lastName,firstName)
             login = request.POST['login']
             password = request.POST['password']
             phoneNumber = request.POST['phoneNumber']
             c.update({'lastName': lastName,'firstName': firstName,'login': login,'password': password,'phoneNumber': phoneNumber})
             valid = check_register_input_fields(lastName, firstName, login, password, phoneNumber)
             if not valid:
-                raise Exception
+                return HttpResponse('something wrong')
             new_user = create_user(firstName=firstName, lastName=lastName, login=login,
                                         password=password,phoneNumber=phoneNumber)
             request.session['user_id'] = new_user.id
         request.session['is_admin'] = False
-        return redirect('/',c)
+        return render(request, 'home.html', c)
     except:
-        return redirect('/register/',c)
-# 
-# def check_register_input_fields(login, password, password2,  phoneNumber):
-#     if not re.match('\w{4,20}', login):
-#         return False
-#     if not re.match('\w{4,20}', password):
-#         return False
-#     if  not password==password2:
-#         return False
-#     if not re.match('\d{6,15}', phoneNumber):
-#         return False
-#     return True
-# 
-# def create_user(login=None, password=None, phoneNumber=None):
-#     client = User()
-#     print(login)
-#     if login:
-#         clients = User.objects.filter(login=login)
-#         if len(clients)>0:
-#             raise Exception
-#         client.login = login
-#     if password:
-#         client.password = password
-#     if phoneNumber:
-#         client.phoneNumber = phoneNumber
-#     client.save()
-#     return client
-
+        return render(request, 'register.html', c)
+    
 # def login(request):
 #     args = {}
 #     args.update(csrf(request))
@@ -158,7 +116,7 @@ def item(request,alias):
         'tovar': tovar,
         'categories': category,
     }
-    return HttpResponse(render_to_string('item.html',context))
+    return render(request, 'item.html', context)
 
 def get_category(request,alias):
     try:
@@ -172,7 +130,7 @@ def get_category(request,alias):
         'category': category,
         'categories':cat,
     }
-    return HttpResponse(render_to_string('index.html',context))
+    return render(request, 'index.html', context)
 
 def search_in_form(request):
     return render_to_response('searching.html')
@@ -249,12 +207,18 @@ def vk_user_authentication(request):
 
 
 def create_user(lastName, firstName, login=None, password=None, phoneNumber=None, vkId=None, permissions=None):
-    user = User(lastName=lastName, firstName=firstName)
+    user = User()
+    if firstName:
+        user.firstName = firstName
+    if lastName:
+        user.lastName = lastName
+    print(lastName, firstName, login,password, phoneNumber)
     if login:
         users = User.objects.filter(login=login)
         if len(users)>0:
-            raise Exception
+            return HttpResponse('something wrong 2')
         user.login = login
+    
     if password:
         user.password = password
     if phoneNumber:
@@ -264,4 +228,29 @@ def create_user(lastName, firstName, login=None, password=None, phoneNumber=None
     if permissions:
         user.permissions = permissions
     user.save()
+    print(lastName, firstName, login,password, phoneNumber)
     return user
+
+def login(request):
+    if not request.is_ajax():
+        return JsonResponse({})
+    response = {}
+    try:
+        login = request.POST['login']
+        password = request.POST['password']
+        print(login, password)
+        try:
+            user = get_object_or_404(User, login=login, password=password)
+            if request.method == 'POST':
+                print(login, password)
+                request.session['user_id'] = user.id
+                request.session['is_admin'] = user.isAdmin
+            response['logged'] = True
+        except Exception:
+            response['logged'] = False
+    except KeyError:
+        pass
+    return JsonResponse(response)
+
+def homepage(request):
+    return render_to_response('homepage.html')

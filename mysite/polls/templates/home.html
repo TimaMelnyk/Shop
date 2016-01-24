@@ -9,6 +9,35 @@
 	<script src="http://code.jquery.com/jquery-1.6.3.min.js"></script>
 </head>
 <body>
+<script>
+    function onLogin() {
+        function getCookies() {
+            var arr = document.cookie.split(/; /);
+            var cookies = new Map();
+            arr.forEach(function(item){
+               var cook = item.split('=');
+               cookies.set(cook[0], cook[1]);
+            });
+            return cookies;
+        }
+        var csrftoken = getCookies().get('csrftoken');
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        });
+        var data = {
+            login: $('#login').val(),
+            password: $('#password').val()
+        };
+         $.post("/signin/", data, function(data) {
+            if(data.logged) {
+                console.log('logged');
+                window.location.reload();
+            }
+        });
+    }
+</script>
 	<div class="header-wrap">
 		<div id="header">
 			<div class="header-holder">
@@ -34,10 +63,14 @@
 					</form>
 					<form action="#" class="login-form">
 						<fieldset>
-							<input type="button" class="button sign-up" value="Sign up" onclick="window.location.href='/register/'"/>
-							<input type="button" class="button sign-in" value="Sign in" />
-							<span class="text-wrap"><input type="text" class="text" placeholder="Password" /></span>
-							<span class="text-wrap"><input type="text" class="text" placeholder="Login" /></span>
+                            {% if not userInfo.userId %}
+                                <input type="button" class="button sign-up" value="Sign up" onclick="window.location.href='/register/'"/>
+							    <input type="button" class="button sign-in" value="Sign in" onclick="onLogin();"/>
+							    <span class="text-wrap"><input type="text" class="text" placeholder="Password" id="password"/></span>
+							    <span class="text-wrap"><input type="text" class="text" placeholder="Login"  id="login"/></span>
+                                {% else %}
+                                <a href="/signup/?exit=1">Exit</a>
+                            {% endif %}
 						</fieldset>
 					</form>
 				</div>
@@ -73,5 +106,6 @@
 				</div>
 			</div>
 		</div>
-	</div></body>
+	</div>
+</body>
 </html>

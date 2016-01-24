@@ -13,7 +13,8 @@ from django.core.context_processors import csrf
 from django.contrib import auth
 from django.conf import settings
 import re
-from django.shortcuts import render, redirect
+import urllib
+from django.shortcuts import render, redirect, get_object_or_404
 import json
 # Create your views here.
 
@@ -179,8 +180,7 @@ def check_register_input_fields(lastName, firstName, login, password, phoneNumbe
 def get_user_authenticated(request):
     try:
         request.session['user_id']
-        request.session['is_admin']
-        userInfo = UserInfo(request.session['user_id'], request.session['is_admin'])
+        userInfo = UserInfo(request.session['user_id'], False)
         return userInfo
     except KeyError:
         return None
@@ -242,9 +242,7 @@ def login(request):
         try:
             user = get_object_or_404(User, login=login, password=password)
             if request.method == 'POST':
-                print(login, password)
                 request.session['user_id'] = user.id
-                request.session['is_admin'] = user.isAdmin
             response['logged'] = True
         except Exception:
             response['logged'] = False
